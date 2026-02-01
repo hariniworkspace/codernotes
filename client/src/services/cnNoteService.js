@@ -1,18 +1,22 @@
-const API = `${import.meta.env.VITE_API_URL}/api/...`
-;
+const API = `${import.meta.env.VITE_API_URL}/api/cn-notes`;
 
 const getToken = () => localStorage.getItem("token");
 
 const safeFetch = async (url, options = {}) => {
   const token = getToken();
 
+  const headers = {
+    "Content-Type": "application/json",
+    ...(options.headers || {}),
+  };
+
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+
   const res = await fetch(url, {
     ...options,
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-      ...(options.headers || {}),
-    },
+    headers,
   });
 
   if (!res.ok) return null;

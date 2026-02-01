@@ -1,18 +1,22 @@
-const API = `${import.meta.env.VITE_API_URL}/api/...`
-
+const API = `${import.meta.env.VITE_API_URL}/api/oops-notes`;
 
 const getToken = () => localStorage.getItem("token");
 
 const safeFetch = async (url, options = {}) => {
   const token = getToken();
 
+  const headers = {
+    "Content-Type": "application/json",
+    ...(options.headers || {}),
+  };
+
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+
   const res = await fetch(url, {
     ...options,
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-      ...(options.headers || {}),
-    },
+    headers,
   });
 
   if (res.status === 401) return null;
@@ -47,6 +51,7 @@ export const updateOopsNote = async (id, data) => {
 export const deleteOopsNote = async (id) => {
   await safeFetch(`${API}/${id}`, { method: "DELETE" });
 };
+
 export const getSimilarOopsNotes = async (id) => {
   return await safeFetch(`${API}/similar/${id}`);
 };

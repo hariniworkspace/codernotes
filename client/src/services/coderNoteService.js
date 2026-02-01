@@ -1,25 +1,25 @@
 import API from "./api";
 
 export const getCoderNotes = async () => {
-  return (await API.get("/codernotes")).data;
+  return (await API.get("/api/codernotes")).data;
 };
 
 export const getCoderNoteById = async (id) => {
-  return (await API.get(`/codernotes/${id}`)).data;
+  return (await API.get(`/api/codernotes/${id}`)).data;
 };
 
 export const createCoderNote = async (note) => {
-  return (await API.post("/codernotes", note)).data;
+  return (await API.post("/api/codernotes", note)).data;
 };
 
 export const updateCoderNote = async (id, note) => {
-  return (await API.put(`/codernotes/${id}`, note)).data;
+  return (await API.put(`/api/codernotes/${id}`, note)).data;
 };
 
 export const deleteCoderNote = async (id) => {
-  return (await API.delete(`/codernotes/${id}`)).data;
+  return (await API.delete(`/api/codernotes/${id}`)).data;
 };
 
 export const toggleRevision = async (id) => {
-  return (await API.patch(`/codernotes/${id}/revision`)).data;
+  return (await API.patch(`/api/codernotes/${id}/revision`)).data;
 };
